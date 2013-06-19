@@ -1,0 +1,2 @@
+python-vero-client
+==================
