@@ -1,2 +1,2 @@
-python-vero-client
+vero-python-client
 ==================
