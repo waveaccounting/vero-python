@@ -2,13 +2,16 @@ import json
 import collections
 import requests
 
-VERO_BASE_URL = 'https://www.getvero.com'
-ENDPOINT = collections.namedtuple('Endpoint', ['method', 'url'])
-ADD_USER = ENDPOINT(method='POST', url=VERO_BASE_URL+'/api/v2/users/track')
-EDIT_USER = ENDPOINT(method='PUT', url=VERO_BASE_URL+'/api/v2/users/edit')
-EDIT_TAGS = ENDPOINT(method='PUT', url=VERO_BASE_URL+'/api/v2/users/tags/edit')
-UNSUBSCRIBE_USER = ENDPOINT(method='POST', url=VERO_BASE_URL+'/api/v2/users/unsubscribe')
-ADD_EVENT = ENDPOINT(method='POST', url=VERO_BASE_URL+'/api/v2/events/track')
+Endpoint = collections.namedtuple('Endpoint', ['method', 'url'])
+
+
+class VeroEndpoints(object):
+    VERO_BASE_URL = 'https://www.getvero.com/'
+    ADD_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/track')
+    EDIT_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/edit')
+    EDIT_TAGS = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/tags/edit')
+    UNSUBSCRIBE_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/unsubscribe')
+    ADD_EVENT = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/events/track')
 
 
 class VeroEventLogger(object):
@@ -31,7 +34,7 @@ class VeroEventLogger(object):
             'data': user_data,
             'development_mode': development_mode
         }
-        return self._fire_request(ADD_USER, payload)
+        return self._fire_request(VeroEndpoints.ADD_USER, payload)
 
     def edit_user(self, user_id, user_changes, development_mode=False):
         """Edit an existing user and return the https request."""
@@ -41,7 +44,7 @@ class VeroEventLogger(object):
             'changes': user_changes,
             'development_mode': development_mode
         }
-        return self._fire_request(EDIT_USER, payload)
+        return self._fire_request(VeroEndpoints.EDIT_USER, payload)
 
     def add_tags(self, user_id, tag_list, development_mode=False):
         """Add a list of tags for an existing user and return the https request."""
@@ -51,7 +54,7 @@ class VeroEventLogger(object):
             'add': tag_list,
             'development_mode': development_mode
         }
-        return self._fire_request(EDIT_TAGS, payload)
+        return self._fire_request(VeroEndpoints.EDIT_TAGS, payload)
 
     def remove_tags(self, user_id, tag_list, development_mode=False):
         """Remove a list of tags for an existing user and return the https request."""
@@ -61,7 +64,7 @@ class VeroEventLogger(object):
             'remove': tag_list,
             'development_mode': development_mode
         }
-        return self._fire_request(EDIT_TAGS, payload)
+        return self._fire_request(VeroEndpoints.EDIT_TAGS, payload)
 
     def unsubscribe_user(self, user_id):
         """Unsubscribe an existing user and return the https request."""
@@ -69,7 +72,7 @@ class VeroEventLogger(object):
             'auth_token': self.auth_token,
             'id': user_id
         }
-        return self._fire_request(UNSUBSCRIBE_USER, payload)
+        return self._fire_request(VeroEndpoints.UNSUBSCRIBE_USER, payload)
 
     def add_event(self, event_name, event_data, user_id, user_email=None, development_mode=False):
         """Add a new event and return the https request."""
@@ -83,4 +86,4 @@ class VeroEventLogger(object):
             'data': event_data,
             'development_mode': development_mode
         }
-        return self._fire_request(ADD_EVENT, payload)
+        return self._fire_request(VeroEndpoints.ADD_EVENT, payload)
