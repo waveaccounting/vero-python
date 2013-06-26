@@ -6,6 +6,7 @@ Endpoint = collections.namedtuple('Endpoint', ['method', 'url'])
 
 
 class VeroEndpoints(object):
+    """Endpoints for Vero API calls."""
     VERO_BASE_URL = 'https://www.getvero.com/'
     ADD_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/track')
     EDIT_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/edit')
@@ -66,11 +67,12 @@ class VeroEventLogger(object):
         }
         return self._fire_request(VeroEndpoints.EDIT_TAGS, payload)
 
-    def unsubscribe_user(self, user_id):
+    def unsubscribe_user(self, user_id, development_mode=False):
         """Unsubscribe an existing user and return the https request."""
         payload = {
             'auth_token': self.auth_token,
-            'id': user_id
+            'id': user_id,
+            'development_mode': development_mode
         }
         return self._fire_request(VeroEndpoints.UNSUBSCRIBE_USER, payload)
 
