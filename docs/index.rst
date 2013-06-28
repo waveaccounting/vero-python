@@ -105,15 +105,3 @@ Event data can contain whatever fields are needed.
             'visited': 'front page'
         }
     >>> logger.add_event(event_name, event_data, user_id, user_email=user_email)
-
-.. toctree::
-   :maxdepth: 2
-
-   user/install.rst
-
-.. Indices and tables
-.. ==================
-.. * :ref:`genindex`
-.. * :ref:`modindex`
-.. * :ref:`search`
-
