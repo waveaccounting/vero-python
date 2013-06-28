@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'vero-python'
+project = u'vero'
 copyright = u'2013, Wave Accounting Inc.'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -167,7 +167,7 @@ html_static_path = ['_static']
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'vero-pythondoc'
+htmlhelp_basename = 'verodoc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -186,7 +186,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'vero-python.tex', u'vero-python Documentation',
+  ('index', 'vero.tex', u'vero Documentation',
    u'Wave Accounting, Inc.', 'manual'),
 ]
 
@@ -216,7 +216,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'vero-python', u'vero-python Documentation',
+    ('index', 'vero', u'vero Documentation',
      [u'Wave Accounting, Inc.'], 1)
 ]
 
@@ -230,8 +230,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'vero-python', u'vero-python Documentation',
-   u'Wave Accounting, Inc.', 'vero-python', 'One line description of project.',
+  ('index', 'vero', u'vero Documentation',
+   u'Wave Accounting, Inc.', 'vero', 'One line description of project.',
    'Miscellaneous'),
 ]
 
