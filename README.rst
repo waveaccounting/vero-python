@@ -1,9 +1,12 @@
 vero: Python client for Vero
-===================================
+============================
+
+Full documentation can be found on `ReadTheDocs <https://vero.readthedocs.org/en/latest/>`_
 
 Vero is an API wrapper for event logging in your Python application.
 Fetch your auth token from your `Vero <http://getvero.com>`_ account and use the python interface instead of `API <http://github.com/getvero/vero-api>`_ web hooks.
 ::
+
     >>> from vero import VeroEventLogger
     >>> logger = VeroEventLogger(auth_token)
     >>> user_id = 42
@@ -30,8 +33,9 @@ Installation
 ------------
 Install the package from PyPI
 ::
+
   pip install vero
-    
+
 Usage
 -----
 
@@ -39,6 +43,7 @@ Create instance
 ~~~~~~~~~~~~~~~
 Use the authorization token from your Vero account page to create a VeroEventLogger object.
 ::
+
     >>> from vero import VeroEventLogger
     >>> auth_token = "foobar"
     >>> logger = VeroEventLogger(auth_token)
@@ -50,6 +55,7 @@ Add user
 ~~~~~~~~
 Create a new user with the information in ``user_data``. ``user_email`` is optional but is needed to trigger emails to the user.
 ::
+
     >>> user_id = 1
     >>> user_email = 'johndoe@example.com'
     >>> user_data = {
@@ -62,6 +68,7 @@ Edit user
 ~~~~~~~~~
 Add or change fields in ``user_data`` for the user.
 ::
+
     >>> user_id = 1
     >>> user_data = {
             'first name': 'Jane'
@@ -72,22 +79,25 @@ Add user tags
 ~~~~~~~~~~~~~
 Add each tag in ``tag_list`` to the user.
 ::
+
     >>> user_id = 1
     >>> tag_list = ['blue', 'red', 'yellow']
     >>> logger.add_tags(user_id, tag_list)
-    
+
 Remove user tags
 ~~~~~~~~~~~~~~~~
 Remove each tag in ``tag_list`` from the user.
 ::
+
     >>> user_id = 1
     >>> tag_list = ['yellow']
     >>> logger.remove_tags(user_id, tag_list)
-    
+
 Unsubscribe user
 ~~~~~~~~~~~~~~~~
 Unsubscribe the user from triggering future events.
 ::
+
     >>> user_id = 1
     >>> logger.unsubscribe_user(user_id)
 
@@ -97,6 +107,7 @@ Note: adding an event with a user id that doesn't exist will create the user.
 
 Event data can contain whatever fields are needed.
 ::
+
     >>> user_id = 2
     >>> user_email = 'janedoe@example.com'
     >>> event_name = 'Visited Website'
