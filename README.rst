@@ -1,7 +1,7 @@
 vero-python: Python client for Vero
 ===================================
 
-Vero Python is an API wrapper for event logging in your Python/Django application.
+Vero Python is an API wrapper for event logging in your Python application.
 Fetch your auth token from your `Vero <http://getvero.com>`_ account and use the python interface instead of `API <http://github.com/getvero/vero-api>`_ web hooks.
 ::
     >>> from vero import VeroEventLogger
@@ -95,7 +95,7 @@ Add event
 ~~~~~~~~~
 Note: adding an event with a user id that doesn't exist will create the user.
 
-Event data can contain whatever fields needed.
+Event data can contain whatever fields are needed.
 ::
     >>> user_id = 2
     >>> user_email = 'janedoe@example.com'
