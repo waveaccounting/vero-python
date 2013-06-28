@@ -1,5 +1,7 @@
 import os
 import unittest
+import json
+from mock import patch
 import vero
 
 
@@ -37,6 +39,15 @@ class VeroEventLoggerTests(unittest.TestCase):
             }
         }
 
+    def test_fire_request(self):
+        endpoint = vero.client.VeroEndpoints.ADD_USER
+        payload = {
+            'test': 1
+        }
+        with patch('requests.request') as mock_request:
+            self.logger._fire_request(endpoint, payload)
+
+        mock_request.assert_called_once_with(endpoint.method, endpoint.url, data=json.dumps(payload))
 
     def test_add_user(self):
         req = self.logger.add_user(self.user_id, self.user_data)
