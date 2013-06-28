@@ -1,30 +1,110 @@
 vero-python: Python client for Vero
 ===================================
 
-vero-python makes it easy to send events to Vero:
-
+Vero Python is an API wrapper for event logging in your Python application.
+Fetch your auth token from your `Vero <http://getvero.com>`_ account and use the python interface instead of `API <http://github.com/getvero/vero-api>`_ web hooks.
 ::
-
     >>> from vero import VeroEventLogger
     >>> logger = VeroEventLogger(auth_token)
     >>> user_id = 42
     >>> user_data = {
-            'full_name': 'Jane Doe',
-            'height': 72,
-            'weight': 108,
-            'address': {
-                'street_name': 'Cherry St.',
-                'street_number': 13,
-            },
+            'full_name': 'Jane Doe'
         }
     >>> response = logger.add_user(user_id, user_data)
     >>> response.status_code
-    >>> 200
+    200
 
-User Guide
------------
+Features
+--------
 
-This part of the documentation explains how to use vero-python as a developer.
+Modify user data and log events. Run in live or test mode.
+
+- Add user
+- Edit user
+- Add user tags
+- Remove user tags
+- Unsubscribe user
+- Add event
+
+Installation
+------------
+Install the package from PyPI
+::
+  pip install vero-python
+    
+Usage
+-----
+
+Create instance
+~~~~~~~~~~~~~~~
+Use the authorization token from your Vero account page to create a VeroEventLogger object.
+::
+    >>> from vero import VeroEventLogger
+    >>> auth_token = "foobar"
+    >>> logger = VeroEventLogger(auth_token)
+
+After creating an instance of VeroEventLogger as ``logger`` use any of the following methods to access Vero.
+All methods will accept the keyword argument ``development_mode=True`` to enable logging in test mode.
+
+Add user
+~~~~~~~~
+Create a new user with the information in ``user_data``. ``user_email`` is optional but is needed to trigger emails to the user.
+::
+    >>> user_id = 1
+    >>> user_email = 'johndoe@example.com'
+    >>> user_data = {
+            'first name': 'John',
+            'last name': 'Doe'
+        }
+    >>> logger.add_user(user_id, user_data, user_email=user_email)
+
+Edit user
+~~~~~~~~~
+Add or change fields in ``user_data`` for the user.
+::
+    >>> user_id = 1
+    >>> user_data = {
+            'first name': 'Jane'
+        }
+    >>> logger.edit_user(user_id, user_data)
+
+Add user tags
+~~~~~~~~~~~~~
+Add each tag in ``tag_list`` to the user.
+::
+    >>> user_id = 1
+    >>> tag_list = ['blue', 'red', 'yellow']
+    >>> logger.add_tags(user_id, tag_list)
+    
+Remove user tags
+~~~~~~~~~~~~~~~~
+Remove each tag in ``tag_list`` from the user.
+::
+    >>> user_id = 1
+    >>> tag_list = ['yellow']
+    >>> logger.remove_tags(user_id, tag_list)
+    
+Unsubscribe user
+~~~~~~~~~~~~~~~~
+Unsubscribe the user from triggering future events.
+::
+    >>> user_id = 1
+    >>> logger.unsubscribe_user(user_id)
+
+Add event
+~~~~~~~~~
+Note: adding an event with a user id that doesn't exist will create the user.
+
+Event data can contain whatever fields are needed.
+::
+    >>> user_id = 2
+    >>> user_email = 'janedoe@example.com'
+    >>> event_name = 'Visited Website'
+    >>> event_data = {
+            'date': 'today',
+            'visited': 'front page'
+        }
+    >>> logger.add_event(event_name, event_data, user_id, user_email=user_email)
 
 .. toctree::
    :maxdepth: 2
