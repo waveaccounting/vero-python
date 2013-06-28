@@ -1,10 +1,7 @@
-import os
-from setuptools import setup
-
-import vero
-
-# Don't generate .pyc, .pyo files on import
-os.environ['PYTHONDONTWRITEBYTECODE'] = '1'
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 packages = [
     'vero'
@@ -15,9 +12,9 @@ setup(
     name='vero',
     description='Python wrapper for Vero API',
     long_description=open('README.md').read(),
-    version=vero.__version__,
+    version='1.1.0',
     author=open('AUTHORS.md').read(),
-    author_email='rwilsonperkin@waveaccounting.com',
+    author_email='opensource@waveaccounting.com',
     url='https://github.com/waveaccounting/vero-python',
     packages=packages,
     package_data={'': ['LICENSE.md']},
@@ -26,5 +23,3 @@ setup(
     install_requires=requires,
     license=open('LICENSE.md').read(),
 )
-
-del os.environ['PYTHONDONTWRITEBYTECODE']

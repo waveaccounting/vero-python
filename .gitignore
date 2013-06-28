@@ -1,5 +1,8 @@
 *.py[cod]
 
+# Docs
+docs/_build
+
 # C extensions
 *.so
 
