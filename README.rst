@@ -1,4 +1,4 @@
-vero-python: Python client for Vero
+vero: Python client for Vero
 ===================================
 
 Vero Python is an API wrapper for event logging in your Python application.
