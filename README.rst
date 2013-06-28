@@ -30,7 +30,7 @@ Installation
 ------------
 Install the package from PyPI
 ::
-  pip install vero-python
+  pip install vero
     
 Usage
 -----
