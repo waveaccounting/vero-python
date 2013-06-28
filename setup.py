@@ -17,7 +17,7 @@ setup(
     author_email='opensource@waveaccounting.com',
     url='https://github.com/waveaccounting/vero-python',
     packages=packages,
-    package_data={'': ['LICENSE.rst']},
+    package_data={'': ['LICENSE.rst', 'AUTHORS.rst', 'README.rst']},
     include_package_data=True,
     zip_safe=True,
     install_requires=requires,
