@@ -116,3 +116,8 @@ Event data can contain whatever fields are needed.
             'visited': 'front page'
         }
     >>> logger.add_event(event_name, event_data, user_id, user_email=user_email)
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/waveaccounting/vero-python/trend.png
+    :alt: Bitdeli badge
+    :target: https://bitdeli.com/free
