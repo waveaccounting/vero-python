@@ -1,7 +1,7 @@
 from .client import VeroEventLogger
 from .client import VeroEndpoints
 
-VERSION = (1, 1, 0)
+VERSION = (1, 1, 2)
 
 __title__ = 'vero_python'
 __version__ = '{major}.{minor}.{patch}'.format(
