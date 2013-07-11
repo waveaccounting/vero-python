@@ -7,7 +7,7 @@ Endpoint = collections.namedtuple('Endpoint', ['method', 'url'])
 
 class VeroEndpoints(object):
     """Endpoints for Vero API calls."""
-    VERO_BASE_URL = 'https://www.getvero.com/'
+    VERO_BASE_URL = 'https://api.getvero.com/'
     ADD_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/track')
     EDIT_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/edit')
     EDIT_TAGS = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/tags/edit')
