@@ -13,7 +13,7 @@ setup(
     name='vero',
     description='Python wrapper for Vero API',
     long_description=open('README.rst').read(),
-    version='1.1.3',
+    version='1.1.4',
     author=open('AUTHORS.rst').read(),
     author_email='opensource@waveaccounting.com',
     url='https://github.com/waveaccounting/vero-python',
