@@ -11,6 +11,7 @@ class VeroEventLoggerTests(unittest.TestCase):
         self.auth_token = os.environ['VERO_AUTH_TOKEN']
         self.logger = vero.client.VeroEventLogger(self.auth_token)
         self.user_id = 1
+        self.new_user_id = 2
         self.user_email = 'john@example.com'
         self.user_data = {
             'name': 'John Smith',
@@ -52,6 +53,11 @@ class VeroEventLoggerTests(unittest.TestCase):
 
     def test_add_user(self):
         req = self.logger.add_user(self.user_id, self.user_data)
+
+        self.assertEqual(req.status_code, requests.codes.ok)
+
+    def test_reidentify_user(self):
+        req = self.logger.reidentify_user(self.user_id, self.new_user_id)
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
