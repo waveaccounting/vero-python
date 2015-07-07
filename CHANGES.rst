@@ -1,6 +1,14 @@
 Vero Python
 ===========
 
+Version 1.2.0
+-------------
+
+Released on July 7, 2015
+
+- Adds support for Re-identify endpoint
+- Thanks @chexton
+
 Version 1.1.4
 -------------
 
