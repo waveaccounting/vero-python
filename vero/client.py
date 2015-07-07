@@ -9,6 +9,7 @@ class VeroEndpoints(object):
     """Endpoints for Vero API calls."""
     VERO_BASE_URL = 'https://api.getvero.com/'
     ADD_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/track')
+    REIDENTIFY_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/reidentify')
     EDIT_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/edit')
     EDIT_TAGS = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/tags/edit')
     UNSUBSCRIBE_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/unsubscribe')
@@ -36,6 +37,15 @@ class VeroEventLogger(object):
             'development_mode': development_mode
         }
         return self._fire_request(VeroEndpoints.ADD_USER, payload)
+
+    def reidentify_user(self, user_id, new_user_id):
+        """Reidentify (alias) a new user and return the https request."""
+        payload = {
+            'auth_token': self.auth_token,
+            'id': user_id,
+            'new_id': new_user_id
+        }
+        return self._fire_request(VeroEndpoints.REIDENTIFY_USER, payload)
 
     def edit_user(self, user_id, user_changes, development_mode=False):
         """Edit an existing user and return the https request."""

@@ -117,6 +117,14 @@ Event data can contain whatever fields are needed.
         }
     >>> logger.add_event(event_name, event_data, user_id, user_email=user_email)
 
+Re-identify a user
+~~~~~~~~~~~~~
+Change a user's ``identifier`` (or ID) in Vero. This method accept their current (old) ``identifier`` and the ``identifier`` to replace it.
+::
+
+    >>> user_id = 1
+    >>> new_user_id = 2 
+    >>> logger.reidentify_user(user_id, new_user_id)
 
 .. image:: https://d2weczhvl823v0.cloudfront.net/waveaccounting/vero-python/trend.png
     :alt: Bitdeli badge
