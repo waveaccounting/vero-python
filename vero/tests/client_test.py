@@ -118,7 +118,7 @@ class VeroEventLoggerTests(unittest.TestCase):
         self.assertEqual(req.status_code, requests.codes.ok)
 
     def test_resubscribe_user(self):
-        req = self.logger.unsubscribe_user(self.user_id)
+        self.logger.unsubscribe_user(self.user_id)
         req = self.logger.resubscribe_user(self.user_id)
 
         self.assertEqual(req.status_code, requests.codes.ok)
@@ -144,7 +144,7 @@ class VeroEventLoggerTests(unittest.TestCase):
         self.assertEqual(req.status_code, requests.codes.ok)
 
     def test_delete_user(self):
-        req = self.logger.add_user(self.user_id, self.user_data)
+        self.logger.add_user(self.user_id, self.user_data)
         req = self.logger.delete_user(self.user_id)
 
         self.assertEqual(req.status_code, requests.codes.ok)
