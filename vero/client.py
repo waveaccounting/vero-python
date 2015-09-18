@@ -124,4 +124,5 @@ class VeroEventLogger(object):
     def heartbeat(self):
         """Check -- is the endpoint up?"""
         endpoint = VeroEndpoints.HEARTBEAT
-        return requests.request(endpoint.method, endpoint.url)
+        resp = requests.request(endpoint.method, endpoint.url)
+        return resp.status_code == requests.codes.ok

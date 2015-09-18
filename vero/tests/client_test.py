@@ -150,9 +150,9 @@ class VeroEventLoggerTests(unittest.TestCase):
         self.assertEqual(req.status_code, requests.codes.ok)
 
     def test_heartbeat(self):
-        req = self.logger.heartbeat()
+        success = self.logger.heartbeat()
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.assertEqual(success, True)
 
 
 if __name__ == "__main__":
