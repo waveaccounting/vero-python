@@ -23,11 +23,14 @@ Features
 Modify user data and log events. Run in live or test mode.
 
 - Add user
+- Delete user
 - Edit user
 - Add user tags
 - Remove user tags
 - Unsubscribe user
+- Resubscribe user
 - Add event
+- Check heartbeat
 
 Installation
 ------------
@@ -35,6 +38,13 @@ Install the package from PyPI
 ::
 
   pip install vero
+
+Run Tests
+------------
+Run Tests from command line.
+::
+
+   VERO_AUTH_TOKEN=[ Your Token here ] python vero/tests/client_test.py
 
 Usage
 -----
@@ -101,6 +111,14 @@ Unsubscribe the user from triggering future events.
     >>> user_id = 1
     >>> logger.unsubscribe_user(user_id)
 
+Resubscribe user
+~~~~~~~~~~~~~~~~
+Resubscribe the user to allow triggering future events.
+::
+
+    >>> user_id = 1
+    >>> logger.resubscribe_user(user_id)
+
 Add event
 ~~~~~~~~~
 Note: adding an event with a user id that doesn't exist will create the user.
@@ -125,6 +143,14 @@ Change a user's ``identifier`` (or ID) in Vero. This method accept their current
     >>> user_id = 1
     >>> new_user_id = 2 
     >>> logger.reidentify_user(user_id, new_user_id)
+
+Delete user
+~~~~~~~~~~~~~~~~
+Delete the user
+::
+
+    >>> user_id = 1
+    >>> logger.delete_user(user_id)
 
 .. image:: https://d2weczhvl823v0.cloudfront.net/waveaccounting/vero-python/trend.png
     :alt: Bitdeli badge
