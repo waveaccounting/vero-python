@@ -44,7 +44,7 @@ Run Tests
 Run Tests from command line.
 ::
 
-   VERO_AUTH_TOKEN=[ Your Token here ] python vero/tests/client_test.py
+   VERO_AUTH_TOKEN=[ Your Token here ] python setup.py test
 
 Usage
 -----
