@@ -1,6 +1,14 @@
 Vero Python
 ===========
 
+Version 1.3.0
+-------------
+
+Released on September 18, 2015
+
+- Adds support for re-subscribe, delete, and heartbeat endpoints
+- Thanks @jlebzelter
+
 Version 1.2.0
 -------------
 
