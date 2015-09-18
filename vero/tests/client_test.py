@@ -117,6 +117,12 @@ class VeroEventLoggerTests(unittest.TestCase):
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
+    def test_resubscribe_user(self):
+        self.logger.unsubscribe_user(self.user_id)
+        req = self.logger.resubscribe_user(self.user_id)
+
+        self.assertEqual(req.status_code, requests.codes.ok)
+
     def test_unsubscribe_user__development_mode(self):
         req = self.logger.unsubscribe_user(self.user_id, development_mode=True)
 
@@ -136,6 +142,17 @@ class VeroEventLoggerTests(unittest.TestCase):
         req = self.logger.add_event(self.event_name, self.event_data, self.user_id, development_mode=True)
 
         self.assertEqual(req.status_code, requests.codes.ok)
+
+    def test_delete_user(self):
+        self.logger.add_user(self.user_id, self.user_data)
+        req = self.logger.delete_user(self.user_id)
+
+        self.assertEqual(req.status_code, requests.codes.ok)
+
+    def test_heartbeat(self):
+        success = self.logger.heartbeat()
+
+        self.assertEqual(success, True)
 
 
 if __name__ == "__main__":

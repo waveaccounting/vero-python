@@ -9,11 +9,14 @@ class VeroEndpoints(object):
     """Endpoints for Vero API calls."""
     VERO_BASE_URL = 'https://api.getvero.com/'
     ADD_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/track')
+    DELETE_USER = Endpoint(method='DELETE', url=VERO_BASE_URL + 'api/v2/users/delete')
     REIDENTIFY_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/reidentify')
     EDIT_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/edit')
     EDIT_TAGS = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/tags/edit')
+    RESUBSCRIBE_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/resubscribe')
     UNSUBSCRIBE_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/unsubscribe')
     ADD_EVENT = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/events/track')
+    HEARTBEAT = Endpoint(method='GET', url=VERO_BASE_URL + 'api/v2/heartbeat')
 
 
 class VeroEventLogger(object):
@@ -86,6 +89,15 @@ class VeroEventLogger(object):
         }
         return self._fire_request(VeroEndpoints.UNSUBSCRIBE_USER, payload)
 
+    def resubscribe_user(self, user_id, development_mode=False):
+        """Resubscribe an existing user and return the https request."""
+        payload = {
+            'auth_token': self.auth_token,
+            'id': user_id,
+            'development_mode': development_mode
+        }
+        return self._fire_request(VeroEndpoints.RESUBSCRIBE_USER, payload)
+
     def add_event(self, event_name, event_data, user_id, user_email=None, development_mode=False):
         """Add a new event and return the https request."""
         payload = {
@@ -99,3 +111,18 @@ class VeroEventLogger(object):
             'development_mode': development_mode
         }
         return self._fire_request(VeroEndpoints.ADD_EVENT, payload)
+
+    def delete_user(self, user_id, development_mode=False):
+        """Delete an existing user and return the https request."""
+        payload = {
+            'auth_token': self.auth_token,
+            'id': user_id,
+            'development_mode': development_mode
+        }
+        return self._fire_request(VeroEndpoints.DELETE_USER, payload)
+
+    def heartbeat(self):
+        """Check -- is the endpoint up?"""
+        endpoint = VeroEndpoints.HEARTBEAT
+        resp = requests.request(endpoint.method, endpoint.url)
+        return resp.status_code == requests.codes.ok
