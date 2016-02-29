@@ -59,7 +59,6 @@ Use the authorization token from your Vero account page to create a VeroEventLog
     >>> logger = VeroEventLogger(auth_token)
 
 After creating an instance of VeroEventLogger as ``logger`` use any of the following methods to access Vero.
-All methods will accept the keyword argument ``development_mode=True`` to enable logging in test mode.
 
 Add user
 ~~~~~~~~
