@@ -151,7 +151,3 @@ Delete the user
 
     >>> user_id = 1
     >>> logger.delete_user(user_id)
-
-.. image:: https://d2weczhvl823v0.cloudfront.net/waveaccounting/vero-python/trend.png
-    :alt: Bitdeli badge
-    :target: https://bitdeli.com/free
