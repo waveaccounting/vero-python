@@ -66,19 +66,9 @@ class VeroEventLoggerTests(unittest.TestCase):
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
-    def test_add_user__development_mode(self):
-        req = self.logger.add_user(self.user_id, self.user_data, development_mode=True)
-
-        self.assertEqual(req.status_code, requests.codes.ok)
-
     def test_edit_user(self):
 
         req = self.logger.edit_user(self.user_id, self.user_changes)
-
-        self.assertEqual(req.status_code, requests.codes.ok)
-
-    def test_edit_user__development_mode(self):
-        req = self.logger.edit_user(self.user_id, self.user_changes, development_mode=True)
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
@@ -92,11 +82,6 @@ class VeroEventLoggerTests(unittest.TestCase):
 
         self.assertEqual(req.status_code, requests.codes.bad)
 
-    def test_add_tags__development_mode(self):
-        req = self.logger.add_tags(self.user_id, self.user_tags, development_mode=True)
-
-        self.assertEqual(req.status_code, requests.codes.ok)
-
     def test_remove_tags(self):
         req = self.logger.remove_tags(self.user_id, self.user_tags)
 
@@ -106,11 +91,6 @@ class VeroEventLoggerTests(unittest.TestCase):
         req = self.logger.add_tags(self.user_id, [])
 
         self.assertEqual(req.status_code, requests.codes.bad)
-
-    def test_remove_tags__development_mode(self):
-        req = self.logger.remove_tags(self.user_id, self.user_tags, development_mode=True)
-
-        self.assertEqual(req.status_code, requests.codes.ok)
 
     def test_unsubscribe_user(self):
         req = self.logger.unsubscribe_user(self.user_id)
@@ -123,11 +103,6 @@ class VeroEventLoggerTests(unittest.TestCase):
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
-    def test_unsubscribe_user__development_mode(self):
-        req = self.logger.unsubscribe_user(self.user_id, development_mode=True)
-
-        self.assertEqual(req.status_code, requests.codes.ok)
-
     def test_add_event(self):
         req = self.logger.add_event(self.event_name, self.event_data, self.user_id)
 
@@ -135,11 +110,6 @@ class VeroEventLoggerTests(unittest.TestCase):
 
     def test_add_event__with_email(self):
         req = self.logger.add_event(self.event_name, self.event_data, self.user_id, user_email=self.user_email)
-
-        self.assertEqual(req.status_code, requests.codes.ok)
-
-    def test_add_event__development_mode(self):
-        req = self.logger.add_event(self.event_name, self.event_data, self.user_id, development_mode=True)
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
