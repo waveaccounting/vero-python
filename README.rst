@@ -1,6 +1,10 @@
 vero: Python client for Vero
 ============================
 
+.. image:: https://circleci.com/gh/waveaccounting/vero-python.svg?style=svg
+   :target: https://circleci.com/gh/waveaccounting/vero-python
+   :alt: Circle CI
+
 Full documentation can be found on `ReadTheDocs <https://vero.readthedocs.org/en/latest/>`_
 
 Vero is an API wrapper for event logging in your Python application.
