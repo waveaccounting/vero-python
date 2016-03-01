@@ -1,14 +1,17 @@
 import os
 import unittest
 import requests
-from mock import patch
+from mock import Mock, patch
 import vero
 
 __MOCK_AUTH_TOKEN__ = '__MOCK_AUTH_TOKEN__'
+__MOCK_REQUESTS__ = Mock()
 
 
+@patch('vero.client.requests', __MOCK_REQUESTS__)
 class VeroEventLoggerTests(unittest.TestCase):
     def setUp(self):
+        __MOCK_REQUESTS__.reset_mock()
         self.logger = vero.client.VeroEventLogger(__MOCK_AUTH_TOKEN__)
         self.user_id = 1
         self.new_user_id = 2
@@ -46,10 +49,10 @@ class VeroEventLoggerTests(unittest.TestCase):
         payload = {
             'test': 1
         }
-        with patch('requests.request') as mock_request:
-            self.logger._fire_request(endpoint, payload)
 
-        mock_request.assert_called_once_with(endpoint.method, endpoint.url, json=payload)
+        self.logger._fire_request(endpoint, payload)
+
+        __MOCK_REQUESTS__.assert_called_once_with(endpoint.method, endpoint.url, json=payload)
 
     def test_add_user(self):
         req = self.logger.add_user(self.user_id, self.user_data)
