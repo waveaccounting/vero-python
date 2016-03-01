@@ -1,130 +1,269 @@
-import os
 import unittest
-import requests
-from mock import patch
+from mock import Mock, patch
 import vero
 
+__MOCK_AUTH_TOKEN__ = '__MOCK_AUTH_TOKEN__'
+__MOCK_REQUESTS__ = Mock()
+__BASE_URL__ = vero.client.VeroEndpoints.VERO_BASE_URL
 
+
+@patch('vero.client.requests.request', __MOCK_REQUESTS__)
 class VeroEventLoggerTests(unittest.TestCase):
     def setUp(self):
-        self.auth_token = os.environ['VERO_AUTH_TOKEN']
-        self.logger = vero.client.VeroEventLogger(self.auth_token)
-        self.user_id = 1
-        self.new_user_id = 2
-        self.user_email = 'john@example.com'
-        self.user_data = {
-            'name': 'John Smith',
-            'height': 72,
-            'weight': 180,
-            'title': 'Mr.',
-            'favourites': {
-                'color': 'red',
-                'ice cream': 'chocolate'
-            }
-        }
-        self.user_changes = {
-            'height': 73,
-            'extra': 'extra'
-        }
-        self.user_tags = ['x', 'y', 'z']
-        self.event_name = 'test event'
-        self.event_data = {
-            'string data': 'a',
-            'numeric data': 123,
-            'float data': 1.23,
-            'list data': ['a', 1],
-            'tuple data': ('a', 1),
-            'dict data': {
-                'a': 1,
-                1: 'a'
-            }
-        }
+        __MOCK_REQUESTS__.reset_mock()
+        self.logger = vero.client.VeroEventLogger(__MOCK_AUTH_TOKEN__)
 
     def test_fire_request(self):
-        endpoint = vero.client.VeroEndpoints.ADD_USER
-        payload = {
-            'test': 1
-        }
-        with patch('requests.request') as mock_request:
-            self.logger._fire_request(endpoint, payload)
+        endpoint = vero.client.Endpoint('method', 'url')
 
-        mock_request.assert_called_once_with(endpoint.method, endpoint.url, json=payload)
+        self.logger._fire_request(endpoint, {'test': 1})
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'method',
+            'url',
+            json={
+                'test': 1
+            },
+        )
 
     def test_add_user(self):
-        req = self.logger.add_user(self.user_id, self.user_data)
+        user_id = 1
+        user_data = {
+            'first_name': 'John',
+            'last_name': 'Smith',
+            'birthdate': '1965-01-31',
+            'phone': '555-555-5555',
+        }
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.add_user(user_id, user_data)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'POST',
+            __BASE_URL__ + 'api/v2/users/track',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'data': user_data,
+                'email': None,
+                'id': user_id,
+            },
+        )
 
     def test_reidentify_user(self):
-        req = self.logger.reidentify_user(self.user_id, self.new_user_id)
+        user_id = 1
+        new_user_id = 2
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.reidentify_user(user_id, new_user_id)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'PUT',
+            __BASE_URL__ + 'api/v2/users/reidentify',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'new_id': new_user_id,
+                'id': user_id,
+            },
+        )
 
     def test_add_user__with_email(self):
-        req = self.logger.add_user(self.user_id, self.user_data, user_email=self.user_email)
+        user_id = 1
+        user_email = 'test@example.com'
+        user_data = {
+            'first_name': 'John',
+            'last_name': 'Smith',
+            'birthdate': '1965-01-31',
+            'phone': '555-555-5555',
+        }
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.add_user(user_id, user_data, user_email)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'POST',
+            __BASE_URL__ + 'api/v2/users/track',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'data': user_data,
+                'email': user_email,
+                'id': user_id,
+            },
+        )
 
     def test_edit_user(self):
+        user_id = 1
+        user_changes = {
+            'first_name': 'Jane',
+        }
 
-        req = self.logger.edit_user(self.user_id, self.user_changes)
+        self.logger.edit_user(user_id, user_changes)
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'PUT',
+            __BASE_URL__ + 'api/v2/users/edit',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'changes': user_changes,
+                'id': user_id,
+            },
+        )
 
     def test_add_tags(self):
-        req = self.logger.add_tags(self.user_id, self.user_tags)
+        user_id = 1
+        user_tags = ['x', 'y']
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.add_tags(user_id, user_tags)
 
-    def test_add_tags__empyty_list(self):
-        req = self.logger.add_tags(self.user_id, [])
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'PUT',
+            __BASE_URL__ + 'api/v2/users/tags/edit',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'add': user_tags,
+                'id': user_id,
+            },
+        )
 
-        self.assertEqual(req.status_code, requests.codes.bad)
+    def test_add_tags__empty_list(self):
+        user_id = 1
+        user_tags = []
+
+        self.logger.add_tags(user_id, user_tags)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'PUT',
+            __BASE_URL__ + 'api/v2/users/tags/edit',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'add': [],
+                'id': user_id,
+            },
+        )
 
     def test_remove_tags(self):
-        req = self.logger.remove_tags(self.user_id, self.user_tags)
+        user_id = 1
+        user_tags = ['x', 'y']
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.remove_tags(user_id, user_tags)
 
-    def test_remove_tags__empyty_list(self):
-        req = self.logger.add_tags(self.user_id, [])
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'PUT',
+            __BASE_URL__ + 'api/v2/users/tags/edit',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'remove': user_tags,
+                'id': user_id,
+            },
+        )
 
-        self.assertEqual(req.status_code, requests.codes.bad)
+    def test_remove_tags__empty_list(self):
+        user_id = 1
+        user_tags = []
+
+        self.logger.remove_tags(user_id, user_tags)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'PUT',
+            __BASE_URL__ + 'api/v2/users/tags/edit',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'remove': [],
+                'id': user_id,
+            },
+        )
 
     def test_unsubscribe_user(self):
-        req = self.logger.unsubscribe_user(self.user_id)
+        user_id = 1
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.unsubscribe_user(user_id)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'POST',
+            __BASE_URL__ + 'api/v2/users/unsubscribe',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'id': user_id,
+            },
+        )
 
     def test_resubscribe_user(self):
-        self.logger.unsubscribe_user(self.user_id)
-        req = self.logger.resubscribe_user(self.user_id)
+        user_id = 1
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.resubscribe_user(user_id)
+
+        __MOCK_REQUESTS__.assert_called_with(
+            'POST',
+            __BASE_URL__ + 'api/v2/users/resubscribe',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'id': user_id,
+            },
+        )
 
     def test_add_event(self):
-        req = self.logger.add_event(self.event_name, self.event_data, self.user_id)
+        user_id = 1
+        event_name = 'track user'
+        event_data = {
+            'color': 'red',
+            'number': 2,
+        }
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.add_event(event_name, event_data, user_id)
+
+        __MOCK_REQUESTS__.assert_called_with(
+            'POST',
+            __BASE_URL__ + 'api/v2/events/track',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'event_name': event_name,
+                'data': event_data,
+                'identity': {
+                    'id': user_id,
+                    'email': None,
+                },
+            },
+        )
 
     def test_add_event__with_email(self):
-        req = self.logger.add_event(self.event_name, self.event_data, self.user_id, user_email=self.user_email)
+        user_id = 1
+        user_email = 'test@example.com'
+        event_name = 'track user'
+        event_data = {
+            'color': 'red',
+            'number': 2,
+        }
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.add_event(event_name, event_data, user_id, user_email)
+
+        __MOCK_REQUESTS__.assert_called_with(
+            'POST',
+            __BASE_URL__ + 'api/v2/events/track',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'event_name': event_name,
+                'data': event_data,
+                'identity': {
+                    'id': user_id,
+                    'email': user_email,
+                },
+            },
+        )
 
     def test_delete_user(self):
-        self.logger.add_user(self.user_id, self.user_data)
-        req = self.logger.delete_user(self.user_id)
+        user_id = 1
 
-        self.assertEqual(req.status_code, requests.codes.ok)
+        self.logger.delete_user(user_id)
+
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'DELETE',
+            __BASE_URL__ + 'api/v2/users/delete',
+            json={
+                'auth_token': __MOCK_AUTH_TOKEN__,
+                'id': user_id,
+            },
+        )
 
     def test_heartbeat(self):
-        success = self.logger.heartbeat()
+        self.logger.heartbeat()
 
-        self.assertEqual(success, True)
-
-
-if __name__ == "__main__":
-    if os.environ.get('VERO_AUTH_TOKEN', None) is None:
-        exit('error: must set environment variable VERO_AUTH_TOKEN')
-    unittest.main()
+        __MOCK_REQUESTS__.assert_called_once_with(
+            'GET',
+            __BASE_URL__ + 'api/v2/heartbeat',
+        )
