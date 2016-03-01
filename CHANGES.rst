@@ -1,6 +1,21 @@
 Vero Python
 ===========
 
+Version 2.0.0
+-------------
+
+Released on February 29, 2015
+
+Breaking Changes
+
+- Changed ``VeroEndpoints.VERO_BASE_URL`` to ``VeroEndpoints._BASE_URL`` and
+  moved the ``api/v2`` path prefix into it to avoid repetition in each endpoint
+- Removed deprecated ``development_mode`` parameter. Will throw a ``TypeError``
+  for consumers that have this value set. To upgrade, remove the parameter,
+  since Vero ignores it anyways.
+- Explicitly uses json as content type for payloads (thanks @vibrant)
+- Management: removed Travis and BitDeli, added CircleCI and Read the Docs
+
 Version 1.3.0
 -------------
 
