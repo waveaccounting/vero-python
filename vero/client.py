@@ -24,8 +24,7 @@ class VeroEventLogger(object):
 
     @classmethod
     def _fire_request(cls, endpoint, payload):
-        json_payload = json.dumps(payload)
-        return requests.request(endpoint.method, endpoint.url, data=json_payload)
+        return requests.request(endpoint.method, endpoint.url, json=payload)
 
     def __init__(self, auth_token):
         self.auth_token = auth_token
