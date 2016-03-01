@@ -1,6 +1,5 @@
 import os
 import unittest
-import json
 import requests
 from mock import patch
 import vero
