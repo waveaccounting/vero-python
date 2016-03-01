@@ -1,5 +1,4 @@
 import unittest
-import requests
 from mock import Mock, patch
 import vero
 
