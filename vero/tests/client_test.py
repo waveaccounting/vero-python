@@ -4,11 +4,12 @@ import requests
 from mock import patch
 import vero
 
+__MOCK_AUTH_TOKEN__ = '__MOCK_AUTH_TOKEN__'
+
 
 class VeroEventLoggerTests(unittest.TestCase):
     def setUp(self):
-        self.auth_token = os.environ['VERO_AUTH_TOKEN']
-        self.logger = vero.client.VeroEventLogger(self.auth_token)
+        self.logger = vero.client.VeroEventLogger(__MOCK_AUTH_TOKEN__)
         self.user_id = 1
         self.new_user_id = 2
         self.user_email = 'john@example.com'
