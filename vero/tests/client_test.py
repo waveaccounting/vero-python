@@ -1,4 +1,3 @@
-import os
 import unittest
 import requests
 from mock import Mock, patch
@@ -126,9 +125,3 @@ class VeroEventLoggerTests(unittest.TestCase):
         success = self.logger.heartbeat()
 
         self.assertEqual(success, True)
-
-
-if __name__ == "__main__":
-    if os.environ.get('VERO_AUTH_TOKEN', None) is None:
-        exit('error: must set environment variable VERO_AUTH_TOKEN')
-    unittest.main()
