@@ -6,14 +6,14 @@ except ImportError:
 packages = [
     'vero'
 ]
-requires = ['requests==2.7.0']
-tests_require = ['mock==1.0.1']
+requires = ['requests']
+tests_require = ['mock']
 
 setup(
     name='vero',
     description='Python wrapper for Vero API',
     long_description=open('README.rst').read(),
-    version='2.0.0',
+    version='2.0.1',
     author=open('AUTHORS.rst').read(),
     author_email='opensource@waveaccounting.com',
     url='https://github.com/waveaccounting/vero-python',
