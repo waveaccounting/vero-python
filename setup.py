@@ -6,8 +6,8 @@ except ImportError:
 packages = [
     'vero'
 ]
-requires = ['requests==2.7.0']
-tests_require = ['mock==1.0.1']
+requires = ['requests']
+tests_require = ['mock']
 
 setup(
     name='vero',
