@@ -1,10 +1,17 @@
 Vero Python
 ===========
 
+Version 2.0.1
+-------------
+
+Released on March 22, 2017
+
+- Removed pinned version from `requests` and `mock` dependencies
+
 Version 2.0.0
 -------------
 
-Released on February 29, 2015
+Released on February 29, 2016
 
 Breaking Changes
 
