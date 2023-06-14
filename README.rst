@@ -1,3 +1,8 @@
+===============
+This package is unmaintained
+===============
+
+
 vero: Python client for Vero
 ============================
 
